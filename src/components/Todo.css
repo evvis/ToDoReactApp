@@ -1,0 +1,27 @@
+input {
+    width: 50%;
+    border: none;
+    border-bottom: 2px solid darkgrey;
+    margin-right: 10px;
+    padding: 5px;
+    line-height: 17px;
+}
+input:focus {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid darkcyan;
+}
+
+.btn {
+    padding-top: 4px;
+}
+
+.todoWrapper {
+    width: 95%;
+    border-bottom: 1px solid gray;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.btnRemove {
+    padding-bottom: 4px;
+}
