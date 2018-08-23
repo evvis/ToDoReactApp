@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "./config/*.js",
+          "postcss.config.js",
+          "**/__tests__/**",
+          "src/support/setupTests.js"
+        ]
+      }
+    ],
+    "import/no-unresolved": "off"
+  }
+}
