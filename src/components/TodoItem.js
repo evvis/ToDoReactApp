@@ -17,9 +17,9 @@ export default class TodoItem extends React.Component {
         <div className="btnRemove">
           <Button onClick={evt => this.removeTodo(this.props.id)}>Remove</Button>
           <br />
-          Todo : {this.props.todo.taskName}
+          Todo : {this.props.todo.todoName}
           <br />
-          Description : {this.props.todo.description}
+          Description : {this.props.todo.todoDescription}
         </div>
       </div>
     );
