@@ -19,9 +19,9 @@ export default class TodoInput extends React.Component {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
-  addTodo(todo) {
-    if (todo.length > 0) {
-      this.props.addTodo(todo);
+  addTodo(taskName, description) {
+    if (description.length > 0) {
+      this.props.addTodo(taskName, description);
       this.setState({
         taskName: '',
         description: '',
@@ -31,15 +31,17 @@ export default class TodoInput extends React.Component {
 
   render() {
     return (
-      <div>
+      <form>
         <div>
-          <input name="taskName" type="text" value={this.state.taskName} onChange={this.handleChange} />
-          <input name="description" type="text" value={this.state.description} onChange={this.handleChange} />
+          <div>
+            <input name="taskName" type="text" value={this.state.taskName} onChange={this.handleChange} />
+            <input name="description" type="text" value={this.state.description} onChange={this.handleChange} />
+          </div>
+          <div className="btn">
+            <Button onClick={() => this.addTodo(this.state.taskName, this.state.description)}>Save Todo</Button>
+          </div>
         </div>
-        <div className="btn">
-          <Button onClick={() => this.addTodo(this.state.taskName, this.state.description)}>Save Todo</Button>
-        </div>
-      </div>
+      </form>
     );
   }
 }
