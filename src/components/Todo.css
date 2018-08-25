@@ -25,3 +25,7 @@ input:focus {
 .btnRemove {
     padding-bottom: 4px;
 }
+
+.todo-item-card {
+    text-decoration: line-through;
+}
