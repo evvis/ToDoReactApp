@@ -10,9 +10,9 @@ class App extends Component {
 
     this.state = {
       todos: [
-        { id: 0, todoName: 'Test1', todoDescription: 'sometest1' },
-        { id: 1, todoName: 'Test2', todoDescription: 'sometest2' },
-        { id: 2, todoName: 'Test3', todoDescription: 'sometest3' },
+        { id: 0, todoName: 'Test1', todoDescription: 'sometest1', todoImportance: 'usually' },
+        { id: 1, todoName: 'Test2', todoDescription: 'sometest2', todoImportance: 'usually'  },
+        { id: 2, todoName: 'Test3', todoDescription: 'sometest3', todoImportance: 'important'  },
       ],
       nextId: 3,
     };
@@ -21,9 +21,9 @@ class App extends Component {
     this.removeTodo = this.removeTodo.bind(this);
   }
 
-  addTodo(todoText, todoDescriptionText) {
+  addTodo(todoText, todoDescriptionText, todoImportance) {
     const todos = this.state.todos.slice();
-    todos.push({ id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText });
+    todos.push({ id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText, todoImportance: todoImportance});
     this.setState({
       todos,
       nextId: ++this.state.nextId,

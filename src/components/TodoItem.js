@@ -20,6 +20,8 @@ export default class TodoItem extends React.Component {
           Todo : {this.props.todo.todoName}
           <br />
           Description : {this.props.todo.todoDescription}
+          <br />
+          Importance: : {this.props.todo.todoImportance}
         </div>
       </div>
     );
