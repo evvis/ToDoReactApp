@@ -17,7 +17,7 @@ export default class TodoItem extends React.Component {
           <Grid item xs={8}>
             <div className="todoWrapper">
               <Button onClick={evt => this.removeTodo(this.props.id)}>Remove</Button>
-              <Button style={{ backgroundColor: '#E3F2FD'}}>Edit</Button>
+              <Button onClick={() => this.props.editTodo()} disabled={!!this.props.todo.todoDateClose}>Edit</Button>
               <div className={"todo-item-card" + (this.props.todo.todoDateClose ? '' : 'completed')}>
                 <br />
                 Todo : {this.props.todo.todoName}
@@ -35,10 +35,10 @@ export default class TodoItem extends React.Component {
               <Button style={{ backgroundColor: '#90CAF9', padding: 15}}
                       onClick={() => this.props.completeTodo(this.props.id)}
               >
-                {this.props.todo.todoDateClose ? 'unDone' : 'Done'}
+                {this.props.todo.todoDateClose ? 'Completed' : 'Done'}
               </Button>
               <br />
-              <div>{this.props.todo.todoDateClose ? this.props.todo.todoDateClose.toLocaleString() : null}</div>
+              <div style={{paddingTop: 20}}>{this.props.todo.todoDateClose ? this.props.todo.todoDateClose.toLocaleString() : null}</div>
             </div>
           </Grid>
         </Grid>

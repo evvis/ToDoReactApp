@@ -31,9 +31,15 @@ export default class TodoInput extends React.Component {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
-  addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoDateClose) {
-    if (todoName.length > 0) {
-      this.props.addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoDateClose);
+  addTodo() {
+    if (this.state.todoName.length > 0) {
+      this.props.addTodo(
+        this.state.todoName,
+        this.state.todoDescription,
+        this.state.todoImportance,
+        this.state.todoDateTime,
+        this.state.todoDateClose,
+      );
       this.setState({
         todoName: '',
         todoDescription: '',
@@ -42,6 +48,18 @@ export default class TodoInput extends React.Component {
         todoDateClose: '',
       });
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+      if (!nextProps.editingTodo) {
+      return;
+    }
+    const { todoName, todoDescription, todoImportance } = nextProps.editingTodo;
+    this.setState({
+      todoName,
+      todoDescription,
+      todoImportance,
+    });
   }
 
   render() {
@@ -105,13 +123,7 @@ export default class TodoInput extends React.Component {
             />
           </div>
           <div className="btn">
-            <Button onClick={() => this.addTodo(
-              this.state.todoName,
-              this.state.todoDescription,
-              this.state.todoImportance,
-              this.state.todoDateTime,
-              this.state.todoDateClose,
-            )}
+            <Button onClick={() => this.addTodo()}
             >
               Save Todo
             </Button>

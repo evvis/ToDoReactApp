@@ -16,8 +16,7 @@ class App extends Component {
           todoDescription: 'sometest1',
           todoImportance: 'usually',
           todoDateTime: new Date('2018-08-16T10:30'),
-          todoDateClose: '',
-          todoEditing: false,
+          todoDateClose: '2018-08-20T10:30',
         },
         {
           id: 2,
@@ -26,7 +25,6 @@ class App extends Component {
           todoImportance: 'usually',
           todoDateTime: new Date('2018-10-18T12:30'),
           todoDateClose: '',
-          todoEditing: false,
         },
         {
           id: 3,
@@ -35,10 +33,10 @@ class App extends Component {
           todoImportance: 'important',
           todoDateTime: new Date('2018-09-01T15:30'),
           todoDateClose: '',
-          todoEditing: false,
         },
       ],
       nextId: 4,
+      editingTodo: null,
     };
 
     this.addTodo = this.addTodo.bind(this);
@@ -47,9 +45,20 @@ class App extends Component {
 
   addTodo(todoText, todoDescriptionText, todoImportance, todoDateTime, todoDateClose) {
     const todos = this.state.todos.slice();
-    todos.push({
-      id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText, todoImportance, todoDateTime, todoDateClose,
-    });
+    const newTodo = { id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText, todoImportance, todoDateTime, todoDateClose,
+    };
+    if (this.state.editingTodo) {
+      newTodo.todoComplete = this.state.editingTodo.todoComplete;
+      const todoIndex = todos.findIndex(todo => todo.id === this.state.editingTodo.id);
+      todos[todoIndex] = newTodo;
+      this.setState({
+        todos,
+        editingTodo: null,
+      });
+      return;
+    }
+
+    todos.push(newTodo);
     this.setState({
       todos,
       nextId: this.state.nextId + 1,
@@ -73,12 +82,18 @@ class App extends Component {
     });
   };
 
+  editTodo(todo) {
+    this.setState({
+      editingTodo: todo,
+    });
+  }
+
   render() {
     const today = new Date();
     return (
       <div className="App">
         <Header />
-        <TodoInput addTodo={this.addTodo} />
+        <TodoInput editingTodo={this.state.editingTodo} addTodo={this.addTodo} />
         <ul>
           {
            this.state.todos.map((todo) => {
@@ -91,6 +106,7 @@ class App extends Component {
                  id={todo.id}
                  removeTodo={this.removeTodo}
                  completeTodo={this.completeTodo}
+                 editTodo={() => this.editTodo(todo)}
                />
              );
            })
