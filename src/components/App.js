@@ -11,44 +11,47 @@ class App extends Component {
     this.state = {
       todos: [
         {
-          id: 0,
+          id: 1,
           todoName: 'Test1',
           todoDescription: 'sometest1',
           todoImportance: 'usually',
           todoDateTime: '2018-08-16T10:30',
-          todoCompleted: true,
-          todoEditing: false,
-        },
-        {
-          id: 1,
-          todoName: 'Test2',
-          todoDescription: 'sometest2',
-          todoImportance: 'usually',
-          todoDateTime: '2018-10-18T12:30',
-          todoCompleted: false,
+          todoComplete: true,
+          todoDateClose: '',
           todoEditing: false,
         },
         {
           id: 2,
+          todoName: 'Test2',
+          todoDescription: 'sometest2',
+          todoImportance: 'usually',
+          todoDateTime: '2018-10-18T12:30',
+          todoComplete: false,
+          todoDateClose: '',
+          todoEditing: false,
+        },
+        {
+          id: 3,
           todoName: 'Test3',
           todoDescription: 'sometest3',
           todoImportance: 'important',
           todoDateTime: '2018-09-1T15:30',
-          todoCompleted: true,
+          todoComplete: true,
+          todoDateClose: '',
           todoEditing: false,
         },
       ],
-      nextId: 3,
+      nextId: 4,
     };
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
   }
 
-  addTodo(todoText, todoDescriptionText, todoImportance, todoDateTime, todoCompleted) {
+  addTodo(todoText, todoDescriptionText, todoImportance, todoDateTime, todoComplete, todoDateClose) {
     const todos = this.state.todos.slice();
     todos.push({
-      id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText, todoImportance, todoDateTime, todoCompleted,
+      id: this.state.nextId, todoName: todoText, todoDescription: todoDescriptionText, todoImportance, todoDateTime, todoComplete, todoDateClose,
     });
     this.setState({
       todos,
@@ -62,10 +65,13 @@ class App extends Component {
     });
   }
 
-  completedTodo = (id) => {
-    const todos = this.state.todos;
-    todos[id].todoCompleted = !todos[id].todoCompleted;
-    this.setState({ todos });
+  completeTodo = (id) => {
+    const dateClose = new Date();
+    dateClose.setSeconds(1);
+    const foundTodo = this.state.todos.find(todo => todo.id === id);
+    foundTodo.push({
+        todoDateClose: dateClose,
+    });
   };
 
   render() {
@@ -81,7 +87,7 @@ class App extends Component {
                key={todo.id}
                id={todo.id}
                removeTodo={this.removeTodo}
-               completedTodo={this.completedTodo}
+               completeTodo={this.completeTodo}
              />
            ))
           }

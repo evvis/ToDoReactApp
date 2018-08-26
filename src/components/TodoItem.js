@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/es/Grid/Grid';
 import Paper from '@material-ui/core/es/Paper/Paper';
 import Checkbox from '@material-ui/core/es/Checkbox/Checkbox';
 
+
 export default class TodoItem extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,7 @@ export default class TodoItem extends React.Component {
             <div className="todoWrapper">
               <Button onClick={evt => this.removeTodo(this.props.id)}>Remove</Button>
               <Button style={{ backgroundColor: '#E3F2FD'}}>Edit</Button>
-              <div className={"todo-item-card" + (this.props.todo.todoCompleted ? '' : 'completed')}>
+              <div className={"todo-item-card" + (this.props.todo.todoComplete ? '' : 'completed')}>
                 <br />
                 Todo : {this.props.todo.todoName}
                 <br />
@@ -37,14 +38,16 @@ export default class TodoItem extends React.Component {
           <Grid item xs={4}>
             <div style={{ padding: 25}}>
               <Button style={{ backgroundColor: '#90CAF9', padding: 15}}
-                      onClick={() => this.props.completedTodo(this.props.id)}
+                      onClick={() => this.props.completeTodo(this.props.id)}
               >
-                {this.props.todo.todoCompleted ? 'unDone' : 'Done'}
+                {this.props.todo.todoComplete ? 'unDone' : 'Done'}
               </Button>
               <Checkbox
-                  onChange={() => this.props.completedTodo(this.props.id)}
-                  checked={this.props.todo.todoCompleted}
+                  onChange={ () => this.props.completeTodo(this.props.id) }
+                  checked={this.props.todo.todoComplete}
               />
+              <br />
+              <div>{this.props.todo.todoDateClose}</div>
             </div>
           </Grid>
         </Grid>
