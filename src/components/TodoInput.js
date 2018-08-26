@@ -20,7 +20,6 @@ export default class TodoInput extends React.Component {
       todoDescription: '',
       todoImportance: '',
       todoDateTime: '',
-      todoComplete: false,
       todoDateClose: '',
     };
 
@@ -32,15 +31,14 @@ export default class TodoInput extends React.Component {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
-  addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoComplete, todoDateClose) {
+  addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoDateClose) {
     if (todoName.length > 0) {
-      this.props.addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoComplete, todoDateClose);
+      this.props.addTodo(todoName, todoDescription, todoImportance, todoDateTime, todoDateClose);
       this.setState({
         todoName: '',
         todoDescription: '',
         todoImportance: '',
         todoDateTime: '',
-        todoComplete: false,
         todoDateClose: '',
       });
     }
@@ -112,7 +110,6 @@ export default class TodoInput extends React.Component {
               this.state.todoDescription,
               this.state.todoImportance,
               this.state.todoDateTime,
-              this.state.todoComplete,
               this.state.todoDateClose,
             )}
             >

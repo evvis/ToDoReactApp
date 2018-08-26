@@ -29,3 +29,7 @@ input:focus {
 .todo-item-card {
     text-decoration: line-through;
 }
+
+.overdue  {
+    background-color: #ef5350 !important;
+}
