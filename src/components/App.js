@@ -7,7 +7,6 @@ import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
 import Header from './Header';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
