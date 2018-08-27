@@ -12,41 +12,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      todos: [
-        {
-          id: 1,
-          name: 'Test1',
-          description: 'sometest1',
-          importance: 'usually',
-          dateTime: new Date('2018-08-16T10:30'),
-          dateClose: '20.08.2018, 10:30:01',
-        },
-        {
-          id: 2,
-          name: 'Test2',
-          description: 'sometest2',
-          importance: 'usually',
-          dateTime: new Date('2018-10-18T12:30'),
-          dateClose: '',
-        },
-        {
-          id: 3,
-          name: 'Test3',
-          description: 'sometest3',
-          importance: 'important',
-          dateTime: new Date('2018-09-01T15:30'),
-          dateClose: '',
-        },
-        {
-          id: 4,
-          name: 'Test4',
-          description: 'sometest4',
-          importance: 'very important',
-          dateTime: new Date('2018-09-01T15:30'),
-          dateClose: '',
-        },
-      ],
-      nextId: 4,
+      todos: [],
+      nextId: 1,
       editingTodo: null,
       filter: [
         { importance: 'all' },
@@ -59,6 +26,8 @@ class App extends Component {
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.getTodos();
+    console.log(this.getTodos())
   }
 
   addTodo(name, description, importance, dateTime, dateClose) {
@@ -78,7 +47,7 @@ class App extends Component {
       this.setState({
         todos,
         editingTodo: null,
-      });
+      }, () => this.saveTodos());
       return;
     }
 
@@ -86,13 +55,13 @@ class App extends Component {
     this.setState({
       todos,
       nextId: this.state.nextId + 1,
-    });
+    }, () => this.saveTodos());
   }
 
   removeTodo(id) {
     this.setState({
       todos: this.state.todos.filter((todo, index) => todo.id !== id),
-    });
+    }, () => this.saveTodos());
   }
 
   completeTodo = (id) => {
@@ -103,13 +72,13 @@ class App extends Component {
     foundTodo.dateClose = dateClose.toLocaleString();
     this.setState({
       todos,
-    });
+    }, () => this.saveTodos());
   };
 
   editTodo(todo) {
     this.setState({
       editingTodo: todo,
-    });
+    }, () => this.saveTodos());
   }
 
   todosFiltered = () => {
@@ -131,6 +100,19 @@ class App extends Component {
       importance,
     });
   };
+
+    saveTodos(){
+      let str = JSON.stringify(this.todos);
+      localStorage.setItem('todos', str);
+    }
+
+    getTodos() {
+      let str = localStorage.getItem('todos');
+      this.todos = JSON.parse(str);
+      if (!this.todos) {
+        return this.todos;
+      }
+    }
 
   render() {
     const today = new Date();
