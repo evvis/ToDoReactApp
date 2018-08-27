@@ -4,7 +4,6 @@ import Button from '@material-ui/core/es/Button/Button';
 import TextField from '@material-ui/core/es/TextField/TextField';
 import MenuItem from '@material-ui/core/es/MenuItem/MenuItem';
 
-
 const importance = [
   { value: 'usually' },
   { value: 'important' },
@@ -51,7 +50,7 @@ export default class TodoInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      if (!nextProps.editingTodo) {
+    if (!nextProps.editingTodo) {
       return;
     }
     const { todoName, todoDescription, todoImportance } = nextProps.editingTodo;
@@ -64,70 +63,67 @@ export default class TodoInput extends React.Component {
 
   render() {
     return (
-      <form>
+      <form style={{ padding: '10px' }}>
         <div>
-          <div>
-            <TextField
-              name="todoName"
-              type="text"
-              label="Todo"
-              className="textField"
-              value={this.state.todoName}
-              onChange={this.handleChange}
-            />
-            <br />
-            <TextField
-              name="todoDescription"
-              type="text"
-              label="Description"
-              className="textField"
-              multiline
-              rows="3"
-              value={this.state.todoDescription}
-              onChange={this.handleChange}
-            />
-            <br />
-            <TextField
-              name="todoImportance"
-              type="select"
-              select
-              label="Importance"
-              className="textField"
-              value={this.state.todoImportance}
-              onChange={this.handleChange}
-              SelectProps={{
-                MenuProps: {
-                  className: importance.menu,
-                },
-              }}
-              helperText="Please select importance"
-              margin="normal"
-            >
-              {importance.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-            <br />
-            <TextField
-              name="todoDateTime"
-              label="DateTime"
-              type="datetime-local"
-              className="textField"
-              value={this.state.todoDateTime}
-              onChange={this.handleChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </div>
-          <div className="btn">
-            <Button onClick={() => this.addTodo()}
-            >
+          <TextField
+            name="todoName"
+            type="text"
+            label="Todo"
+            className="textField"
+            value={this.state.todoName}
+            onChange={this.handleChange}
+          />
+          <br />
+          <TextField
+            name="todoDescription"
+            type="text"
+            label="Description"
+            className="textField"
+            multiline
+            rows="3"
+            value={this.state.todoDescription}
+            onChange={this.handleChange}
+          />
+          <br />
+          <TextField
+            name="todoImportance"
+            type="select"
+            select
+            label="Importance"
+            className="textField"
+            value={this.state.todoImportance}
+            onChange={this.handleChange}
+            SelectProps={{
+              MenuProps: {
+                className: importance.menu,
+              },
+            }}
+            helperText="Please select importance"
+            margin="normal"
+          >
+            {importance.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.value}
+              </MenuItem>
+            ))}
+          </TextField>
+          <br />
+          <TextField
+            name="todoDateTime"
+            label="DateTime"
+            type="datetime-local"
+            className="textField"
+            value={this.state.todoDateTime}
+            onChange={this.handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </div>
+        <div className="btn">
+          <Button onClick={() => this.addTodo()}>
               Save Todo
-            </Button>
-          </div>
+          </Button>
         </div>
       </form>
     );
