@@ -15,11 +15,11 @@ export default class TodoInput extends React.Component {
     super(props);
 
     this.state = {
-      todoName: '',
-      todoDescription: '',
-      todoImportance: '',
-      todoDateTime: '',
-      todoDateClose: '',
+      name: '',
+      description: '',
+      importance: '',
+      dateTime: '',
+      dateClose: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,20 +31,20 @@ export default class TodoInput extends React.Component {
   }
 
   addTodo() {
-    if (this.state.todoName.length > 0) {
+    if (this.state.name.length > 0) {
       this.props.addTodo(
-        this.state.todoName,
-        this.state.todoDescription,
-        this.state.todoImportance,
-        this.state.todoDateTime,
-        this.state.todoDateClose,
+        this.state.name,
+        this.state.description,
+        this.state.importance,
+        this.state.dateTime,
+        this.state.dateClose,
       );
       this.setState({
-        todoName: '',
-        todoDescription: '',
-        todoImportance: '',
-        todoDateTime: '',
-        todoDateClose: '',
+        name: '',
+        description: '',
+        importance: '',
+        dateTime: '',
+        dateClose: '',
       });
     }
   }
@@ -53,11 +53,11 @@ export default class TodoInput extends React.Component {
     if (!nextProps.editingTodo) {
       return;
     }
-    const { todoName, todoDescription, todoImportance } = nextProps.editingTodo;
+    const { name, description, importance } = nextProps.editingTodo;
     this.setState({
-      todoName,
-      todoDescription,
-      todoImportance,
+      name,
+      description,
+      importance,
     });
   }
 
@@ -66,32 +66,32 @@ export default class TodoInput extends React.Component {
       <form style={{ padding: '10px' }}>
         <div>
           <TextField
-            name="todoName"
+            name="name"
             type="text"
             label="Todo"
             className="textField"
-            value={this.state.todoName}
+            value={this.state.name}
             onChange={this.handleChange}
           />
           <br />
           <TextField
-            name="todoDescription"
+            name="description"
             type="text"
             label="Description"
             className="textField"
             multiline
             rows="3"
-            value={this.state.todoDescription}
+            value={this.state.description}
             onChange={this.handleChange}
           />
           <br />
           <TextField
-            name="todoImportance"
+            name="importance"
             type="select"
             select
             label="Importance"
             className="textField"
-            value={this.state.todoImportance}
+            value={this.state.importance}
             onChange={this.handleChange}
             SelectProps={{
               MenuProps: {
@@ -109,11 +109,11 @@ export default class TodoInput extends React.Component {
           </TextField>
           <br />
           <TextField
-            name="todoDateTime"
+            name="dateTime"
             label="DateTime"
             type="datetime-local"
             className="textField"
-            value={this.state.todoDateTime}
+            value={this.state.dateTime}
             onChange={this.handleChange}
             InputLabelProps={{
               shrink: true,
