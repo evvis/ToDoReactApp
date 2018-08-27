@@ -3,12 +3,7 @@ import './Todo.css';
 import Button from '@material-ui/core/es/Button/Button';
 import TextField from '@material-ui/core/es/TextField/TextField';
 import MenuItem from '@material-ui/core/es/MenuItem/MenuItem';
-
-const importance = [
-  { value: 'usually' },
-  { value: 'important' },
-  { value: 'very important' },
-];
+import { IMPORTANCE } from '../constants';
 
 export default class TodoInput extends React.Component {
   constructor(props) {
@@ -31,13 +26,16 @@ export default class TodoInput extends React.Component {
   }
 
   addTodo() {
-    if (this.state.name.length > 0) {
+    const {
+      name, description, importance, dateTime, dateClose,
+    } = this.state;
+    if (name.length > 0) {
       this.props.addTodo(
-        this.state.name,
-        this.state.description,
-        this.state.importance,
-        this.state.dateTime,
-        this.state.dateClose,
+        name,
+        description,
+        importance,
+        dateTime,
+        dateClose,
       );
       this.setState({
         name: '',
@@ -93,17 +91,13 @@ export default class TodoInput extends React.Component {
             className="textField"
             value={this.state.importance}
             onChange={this.handleChange}
-            SelectProps={{
-              MenuProps: {
-                className: importance.menu,
-              },
-            }}
+            SelectProps={{}}
             helperText="Please select importance"
             margin="normal"
           >
-            {importance.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.value}
+            {IMPORTANCE.map(importance => (
+              <MenuItem key={importance} value={importance}>
+                {importance}
               </MenuItem>
             ))}
           </TextField>

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import Grid from '@material-ui/core/es/Grid/Grid';
-import Button from '@material-ui/core/es/Button/Button';
 import Paper from '@material-ui/core/es/Paper/Paper';
 import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
 import Header from './Header';
+
+const LOCAL_STORAGE_KEY = 'todos';
+
 
 class App extends Component {
   constructor(props) {
@@ -15,12 +17,6 @@ class App extends Component {
       todos: this.getTodosFromLocalStorage(),
       nextId: 1,
       editingTodo: null,
-      filter: [
-        { importance: 'all' },
-        { importance: 'usually' },
-        { importance: 'important' },
-        { importance: 'very important' },
-      ],
       importance: '',
     };
 
@@ -46,7 +42,7 @@ class App extends Component {
       this.setState({
         todos,
         editingTodo: null,
-      }, () => this.saveTodos());
+      }, () => this.saveTodosToLocalStorage());
       return;
     }
 
@@ -54,13 +50,13 @@ class App extends Component {
     this.setState({
       todos,
       nextId: this.state.nextId + 1,
-    }, () => this.saveTodos());
+    }, () => this.saveTodosToLocalStorage());
   }
 
   removeTodo(id) {
     this.setState({
       todos: this.state.todos.filter((todo, index) => todo.id !== id),
-    }, () => this.saveTodos());
+    }, () => this.saveTodosToLocalStorage());
   }
 
   completeTodo = (id) => {
@@ -71,27 +67,23 @@ class App extends Component {
     foundTodo.dateClose = dateClose.toLocaleString();
     this.setState({
       todos,
-    }, () => this.saveTodos());
+    }, () => this.saveTodosToLocalStorage());
   };
 
   editTodo(todo) {
     this.setState({
       editingTodo: todo,
-    }, this.saveTodos());
+    }, this.saveTodosToLocalStorage());
   }
 
   todosFiltered = () => {
-    const importance = this.state.importance.slice();
-    if (this.state.imprtance === 'all') {
-      return this.state.todos;
-    } if (this.state.importance === 'usually') {
-      return this.state.todos.filter(todo => todo.importance === importance);
-    } if (this.state.importance === 'important') {
-      return this.state.todos.filter(todo => todo.importance === importance);
-    } if (this.state.importance === 'very important') {
-      return this.state.todos.filter(todo => todo.importance === importance);
+    const state = this.state;
+    const importance = state.importance;
+
+    if (importance) {
+      return state.todos.filter(todo => todo.importance === importance);
     }
-    return this.state.todos;
+    return state.todos;
   };
 
   updateFilter = (importance) => {
@@ -100,14 +92,14 @@ class App extends Component {
     });
   };
 
-  saveTodos() {
+  saveTodosToLocalStorage() {
     const todos = this.state.todos;
     const str = JSON.stringify(todos);
-    localStorage.setItem('todos', str);
+    localStorage.setItem(LOCAL_STORAGE_KEY, str);
   }
 
   getTodosFromLocalStorage() {
-    const str = localStorage.getItem('todos');
+    const str = localStorage.getItem(LOCAL_STORAGE_KEY);
     return JSON.parse(str) || [];
   }
 
@@ -115,19 +107,7 @@ class App extends Component {
     const today = new Date();
     return (
       <div className="App">
-        <Header />
-        <div className="btn-box">
-          {
-            this.state.filter.map(filter => (
-              <Button
-                key={filter.importance}
-                onClick={() => this.updateFilter(filter.importance)}
-              >
-                {filter.importance}
-              </Button>
-            ))
-            }
-        </div>
+        <Header updateFilter={this.updateFilter} />
         <Grid container spacing={24}>
           <Grid item xs>
             <Paper style={{ margin: '1em' }}>
