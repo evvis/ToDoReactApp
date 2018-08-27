@@ -7,7 +7,6 @@ import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
 import Header from './Header';
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,22 +37,36 @@ class App extends Component {
           dateTime: new Date('2018-09-01T15:30'),
           dateClose: '',
         },
+        {
+          id: 4,
+          name: 'Test4',
+          description: 'sometest4',
+          importance: 'very important',
+          dateTime: new Date('2018-09-01T15:30'),
+          dateClose: '',
+        },
       ],
       nextId: 4,
       editingTodo: null,
-      filter: 'all',
+      filter: [
+        { importance: 'all' },
+        { importance: 'usually' },
+        { importance: 'important' },
+        { importance: 'very important' },
+      ],
+      importance: '',
     };
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
   }
 
-  addTodo(name, descriptionText, importance, dateTime, dateClose) {
+  addTodo(name, description, importance, dateTime, dateClose) {
     const todos = this.state.todos.slice();
     const newTodo = {
       id: this.state.nextId,
       name,
-      description: descriptionText,
+      description,
       importance,
       dateTime,
       dateClose,
@@ -99,8 +112,24 @@ class App extends Component {
     });
   }
 
-  updateFilter = (filter) => {
-    this.setState({ filter });
+  todosFiltered = () => {
+    const importance = this.state.importance.slice();
+    if (this.state.imprtance === 'all') {
+      return this.state.todos;
+    } if (this.state.importance === 'usually') {
+      return this.state.todos.filter(todo => todo.importance === importance);
+    } if (this.state.importance === 'important') {
+      return this.state.todos.filter(todo => todo.importance === importance);
+    } if (this.state.importance === 'very important') {
+      return this.state.todos.filter(todo => todo.importance === importance);
+    }
+    return this.state.todos;
+  };
+
+  updateFilter = (importance) => {
+    this.setState({
+      importance,
+    });
   };
 
   render() {
@@ -109,10 +138,16 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className="btn-box">
-          <Button onClick={() => this.updateFilter('all')}>All</Button>
-          <Button onClick={() => this.updateFilter('usually')}>Usually</Button>
-          <Button onClick={() => this.updateFilter('important')}>Important</Button>
-          <Button onClick={() => this.updateFilter('very important')}>Very important</Button>
+          {
+            this.state.filter.map(filter => (
+              <Button
+                key={filter.importance}
+                onClick={() => this.updateFilter(filter.importance)}
+              >
+                {filter.importance}
+              </Button>
+            ))
+            }
         </div>
         <Grid container spacing={24}>
           <Grid item xs>
@@ -128,7 +163,7 @@ class App extends Component {
           <Grid item xs>
             <Paper style={{ margin: '1em', overflowY: 'auto', height: '500px' }}>
               {
-               this.state.todos.map((todo) => {
+               this.todosFiltered().map((todo) => {
                  const overdue = today > todo.dateTime;
                  return (
                    <TodoItem
