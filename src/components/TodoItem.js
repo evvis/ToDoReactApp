@@ -13,7 +13,7 @@ export default class TodoItem extends React.Component {
     return (
       <form style={{ padding: '5px' }}>
         <Paper
-          style={{ padding: '1em', margin: 20 }}
+          style={{ padding: '10px', margin: 20 }}
           className={`overdue${this.props.overdue ? '' : 'overdue'}`}
         >
           <Grid container spacing={24}>
