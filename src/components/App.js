@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      todos: [],
+      todos: this.getTodosFromLocalStorage(),
       nextId: 1,
       editingTodo: null,
       filter: [
@@ -26,8 +26,6 @@ class App extends Component {
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
-    this.getTodos();
-    console.log(this.getTodos())
   }
 
   addTodo(name, description, importance, dateTime, dateClose) {
@@ -43,6 +41,7 @@ class App extends Component {
     if (this.state.editingTodo) {
       newTodo.todoComplete = this.state.editingTodo.todoComplete;
       const todoIndex = todos.findIndex(todo => todo.id === this.state.editingTodo.id);
+      newTodo.id = this.state.editingTodo.id;
       todos[todoIndex] = newTodo;
       this.setState({
         todos,
@@ -78,7 +77,7 @@ class App extends Component {
   editTodo(todo) {
     this.setState({
       editingTodo: todo,
-    }, () => this.saveTodos());
+    }, this.saveTodos());
   }
 
   todosFiltered = () => {
@@ -101,18 +100,16 @@ class App extends Component {
     });
   };
 
-    saveTodos(){
-      let str = JSON.stringify(this.todos);
-      localStorage.setItem('todos', str);
-    }
+  saveTodos() {
+    const todos = this.state.todos;
+    const str = JSON.stringify(todos);
+    localStorage.setItem('todos', str);
+  }
 
-    getTodos() {
-      let str = localStorage.getItem('todos');
-      this.todos = JSON.parse(str);
-      if (!this.todos) {
-        return this.todos;
-      }
-    }
+  getTodosFromLocalStorage() {
+    const str = localStorage.getItem('todos');
+    return JSON.parse(str) || [];
+  }
 
   render() {
     const today = new Date();
