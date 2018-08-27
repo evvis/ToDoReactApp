@@ -16,27 +16,27 @@ class App extends Component {
       todos: [
         {
           id: 1,
-          todoName: 'Test1',
-          todoDescription: 'sometest1',
-          todoImportance: 'usually',
-          todoDateTime: new Date('2018-08-16T10:30'),
-          todoDateClose: '20.08.2018, 10:30:01',
+          name: 'Test1',
+          description: 'sometest1',
+          importance: 'usually',
+          dateTime: new Date('2018-08-16T10:30'),
+          dateClose: '20.08.2018, 10:30:01',
         },
         {
           id: 2,
-          todoName: 'Test2',
-          todoDescription: 'sometest2',
-          todoImportance: 'usually',
-          todoDateTime: new Date('2018-10-18T12:30'),
-          todoDateClose: '',
+          name: 'Test2',
+          description: 'sometest2',
+          importance: 'usually',
+          dateTime: new Date('2018-10-18T12:30'),
+          dateClose: '',
         },
         {
           id: 3,
-          todoName: 'Test3',
-          todoDescription: 'sometest3',
-          todoImportance: 'important',
-          todoDateTime: new Date('2018-09-01T15:30'),
-          todoDateClose: '',
+          name: 'Test3',
+          description: 'sometest3',
+          importance: 'important',
+          dateTime: new Date('2018-09-01T15:30'),
+          dateClose: '',
         },
       ],
       nextId: 4,
@@ -46,17 +46,17 @@ class App extends Component {
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
-  };
+  }
 
-  addTodo(todoText, todoDescriptionText, todoImportance, todoDateTime, todoDateClose) {
+  addTodo(name, descriptionText, importance, dateTime, dateClose) {
     const todos = this.state.todos.slice();
     const newTodo = {
       id: this.state.nextId,
-      todoName: todoText,
-      todoDescription: todoDescriptionText,
-      todoImportance,
-      todoDateTime,
-      todoDateClose,
+      name,
+      description: descriptionText,
+      importance,
+      dateTime,
+      dateClose,
     };
     if (this.state.editingTodo) {
       newTodo.todoComplete = this.state.editingTodo.todoComplete;
@@ -74,20 +74,20 @@ class App extends Component {
       todos,
       nextId: this.state.nextId + 1,
     });
-  };
+  }
 
   removeTodo(id) {
     this.setState({
       todos: this.state.todos.filter((todo, index) => todo.id !== id),
     });
-  };
+  }
 
   completeTodo = (id) => {
     const todos = [...this.state.todos];
     const dateClose = new Date();
     dateClose.setSeconds(1);
     const foundTodo = todos.find(todo => todo.id === id);
-    foundTodo.todoDateClose = dateClose.toLocaleString();
+    foundTodo.dateClose = dateClose.toLocaleString();
     this.setState({
       todos,
     });
@@ -97,7 +97,7 @@ class App extends Component {
     this.setState({
       editingTodo: todo,
     });
-  };
+  }
 
   updateFilter = (filter) => {
     this.setState({ filter });
@@ -129,7 +129,7 @@ class App extends Component {
             <Paper style={{ margin: '1em', overflowY: 'auto', height: '500px' }}>
               {
                this.state.todos.map((todo) => {
-                 const overdue = today > todo.todoDateTime;
+                 const overdue = today > todo.dateTime;
                  return (
                    <TodoItem
                      overdue={overdue}

@@ -22,27 +22,27 @@ export default class TodoItem extends React.Component {
                 <Button onClick={evt => this.removeTodo(this.props.id)}>Remove</Button>
                 <Button
                   onClick={() => this.props.editTodo()}
-                  disabled={!!this.props.todo.todoDateClose}
+                  disabled={!!this.props.todo.dateClose}
                 >
                   Edit
                 </Button>
-                <div className={`todo-item-card${this.props.todo.todoDateClose ? '' : 'completed'}`}>
+                <div className={`todo-item-card${this.props.todo.dateClose ? '' : 'completed'}`}>
                   <br />
                   Todo :
                   {' '}
-                  {this.props.todo.todoName}
+                  {this.props.todo.name}
                   <br />
                   Description :
                   {' '}
-                  {this.props.todo.todoDescription}
+                  {this.props.todo.description}
                   <br />
                   Importance :
                   {' '}
-                  {this.props.todo.todoImportance}
+                  {this.props.todo.importance}
                   <br />
                   DT :
                   {' '}
-                  {this.props.todo.todoDateTime ? this.props.todo.todoDateTime.toLocaleString() : null}
+                  {this.props.todo.dateTime ? this.props.todo.dateTime.toLocaleString() : null}
                 </div>
               </div>
             </Grid>
@@ -51,14 +51,14 @@ export default class TodoItem extends React.Component {
                 <Button
                   style={{ backgroundColor: '#90CAF9', padding: 15 }}
                   onClick={() => this.props.completeTodo(this.props.id)}
-                  disabled={!!this.props.todo.todoDateClose}
+                  disabled={!!this.props.todo.dateClose}
                 >
                   Done
                 </Button>
                 <br />
                 <div style={{ paddingTop: 20 }}>
-                  {this.props.todo.todoDateClose
-                    ? this.props.todo.todoDateClose.toLocaleString() : null}
+                  {this.props.todo.dateClose
+                    ? this.props.todo.dateClose.toLocaleString() : null}
                 </div>
               </div>
             </Grid>
