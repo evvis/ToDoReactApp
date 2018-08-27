@@ -108,7 +108,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header updateFilter={this.updateFilter} />
-        <Grid container spacing={24}>
+        <Grid container>
           <Grid item xs>
             <Paper style={{ margin: '1em' }}>
               <div>
