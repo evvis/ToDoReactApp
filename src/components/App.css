@@ -1,3 +1,7 @@
+body {
+  font-family: Roboto;
+}
+
 .App {
   text-align: center;
 }
@@ -26,3 +30,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.btn-box {
+  border: none;
+  border-bottom: 2px solid darkgrey;
+  background-color: lightgrey;
+}
+
